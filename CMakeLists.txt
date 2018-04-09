@@ -2,22 +2,18 @@ cmake_minimum_required(VERSION 2.8.3)
 project(tensorflow_catkin)
 
 find_package(catkin_simple REQUIRED)
-
 catkin_simple()
 
 include(ExternalProject)
 
 file(MAKE_DIRECTORY ${CATKIN_DEVEL_PREFIX}/include)
 
-SET(TENSORFLOW_SRC_PATH "tensorflow_src")
-SET(TENSORFLOW_CMAKE_PATH "tensorflow/contrib/cmake")
 ExternalProject_Add(tensorflow_src
-  DEPENDS ${CONTRIB_NAME}
   GIT_REPOSITORY https://github.com/tensorflow/tensorflow.git
   GIT_TAG b874783ccdf4cc36cb3546e6b6a998cb8f3470bb
   UPDATE_COMMAND ""
-  SOURCE_DIR ${TENSORFLOW_SRC_PATH}
-  SOURCE_SUBDIR ${TENSORFLOW_CMAKE_PATH}
+  SOURCE_DIR tensorflow_src
+  SOURCE_SUBDIR tensorflow/contrib/cmake
   BINARY_DIR tensorflow_build
   CMAKE_ARGS
     -DCMAKE_BUILD_TYPE=Release
