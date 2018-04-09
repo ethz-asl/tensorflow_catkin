@@ -4,9 +4,9 @@ tensorflow_catkin
 Catkin package wrapper for Tensorflow 1.7 C++
 
 - Uses the CMake build and does __not__ require Bazel
-- Builds the latest master branch as of 09/04/2018: commit [b8747830(https://github.com/tensorflow/tensorflow/tree/b874783ccdf4cc36cb3546e6b6a998cb8f3470bb)]
-- Supports GPU using the `-DUSE_GPU` flag
-  - Assumes that the root directories of CUDA, CUDNN and NCCL are provided either as environment variables `CUDA_ROOT`, `CUDNN_ROOT` and `NCCL_ROOT`, either as CMake flags `-DCUDA_ROOT`, `-DCUDNN_ROOT`, `-DNCCL_ROOT`
+- Builds the latest master branch as of 09/04/2018: commit [b874783](https://github.com/tensorflow/tensorflow/tree/b874783ccdf4cc36cb3546e6b6a998cb8f3470bb)
+- Supports GPU using the `-DUSE_GPU` CMake flag
+  - Assumes that the root directories of CUDA, CUDNN and NCCL are provided either as environment variables `CUDA_ROOT`, `CUDNN_ROOT` and `NCCL_ROOT`, or as flags `-DCUDA_ROOT`, `-DCUDNN_ROOT`, `-DNCCL_ROOT`
   - Supports linking against the run-time version of `libcuda` in `$CUDA_ROOT/lib64/stubs/`
 - Currently only tested on CentOS 7.4
 
@@ -28,7 +28,7 @@ Catkin package wrapper for Tensorflow 1.7 C++
 </package>
 ```
 
-### CMakeLists.txt
+#### CMakeLists.txt
 ```CMake
 cmake_minimum_required(VERSION 2.8)
 project(test_tensorflow)
@@ -42,7 +42,7 @@ cs_install()
 cs_export()
 ```
 
-### example.cpp
+#### example.cpp
 ```C++
 #include <tensorflow/core/public/session.h>
 #include <tensorflow/core/platform/env.h>
