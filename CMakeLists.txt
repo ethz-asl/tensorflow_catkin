@@ -41,9 +41,7 @@ ExternalProject_Add(tensorflow_src
     -DCUDA_CUDA_LIBRARY=${CUDA_ROOT}/lib64/stubs/libcuda.so
     -Dtensorflow_PATH_NCCL_STATIC_LIB=${NCCL_ROOT}/lib
     -Dtensorflow_CUDNN_INCLUDE=${CUDNN_ROOT}/include
-    -Dtensorflow_PATH_CUDNN_STATIC_LIB=${CUDNN_ROOT}/lib64 ..
-  BUILD_COMMAND make -j8
-  INSTALL_COMMAND make install -j8
+    -Dtensorflow_PATH_CUDNN_STATIC_LIB=${CUDNN_ROOT}/lib64
 )
 
 cs_add_library(${PROJECT_NAME} src/dependency_tracker.cc)
