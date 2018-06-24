@@ -14,26 +14,27 @@ file(MAKE_DIRECTORY ${CATKIN_DEVEL_PREFIX}/include)
 
 ExternalProject_Add(tensorflow_src
   GIT_REPOSITORY https://github.com/tensorflow/tensorflow.git
-  GIT_TAG b874783ccdf4cc36cb3546e6b6a998cb8f3470bb
+  GIT_TAG c1d223de41838e9d387a48137c76ea39d3b38f3f
   PATCH_COMMAND bash -c "for i in ${CMAKE_SOURCE_DIR}/patches/*.patch\$<SEMICOLON> do git apply -p1 $i\$<SEMICOLON> done"
   UPDATE_COMMAND ""
   SOURCE_DIR tensorflow_src
   SOURCE_SUBDIR tensorflow/contrib/cmake
   BINARY_DIR tensorflow_build
   CMAKE_ARGS
+    -DCMAKE_CXX_FLAGS=${CMAKE_CXX_FLAGS}
     -DCMAKE_BUILD_TYPE=Release
     -DCMAKE_INSTALL_PREFIX=${CATKIN_DEVEL_PREFIX}
     # General TF options
     -Dtensorflow_BUILD_SHARED_LIB=ON
     -Dtensorflow_BUILD_ALL_KERNELS=ON
     -Dtensorflow_BUILD_CONTRIB_KERNELS=ON
-    -Dtensorflow_ENABLE_GRPC_SUPPORT=ON  # Needed by tf_protos_cc...
+    -Dtensorflow_ENABLE_GRPC_SUPPORT=OFF
     -Dtensorflow_ENABLE_SSL_SUPPORT=OFF
     -Dtensorflow_BUILD_CC_TESTS=OFF
     -Dtensorflow_BUILD_CC_EXAMPLE=OFF
-    -Dtensorflow_BUILD_PYTHON_BINDINGS=ON  # Needed by tf_c_python_api...
-    -DPYTHON_LIBRARY=${PYTHON_LIBRARY}  # likewise
+    -Dtensorflow_BUILD_PYTHON_BINDINGS=OFF
     -Dtensorflow_BUILD_PYTHON_TESTS=OFF
+    -Dtensorflow_OPTIMIZE_FOR_NATIVE_ARCH=OFF
     # GPU-specific options
     -Dtensorflow_ENABLE_GPU=${USE_GPU}
     -Dtensorflow_PATH_STATIC_LIB=${CUDA_ROOT}/lib64
