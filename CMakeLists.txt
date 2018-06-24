@@ -8,6 +8,7 @@ set(USE_GPU OFF CACHE BOOL "Build Tensorflow with GPU support")
 set(CUDA_ROOT $ENV{CUDA_ROOT} CACHE PATH "CUDA root directory")
 set(CUDNN_ROOT $ENV{CUDNN_ROOT} CACHE PATH "CUDNN root directory")
 set(NCCL_ROOT $ENV{NCCL_ROOT} CACHE PATH "NCCL root directory")
+set(NUM_MAKE_JOBS "" CACHE STRING "Number of jobs concurrently run during the build (passed as make -j parameter)")
 set(CUDA_VERSION $ENV{CUDA_VERSION} CACHE STRING "CUDA version")
 set(CUDNN_VERSION $ENV{CUDNN_VERSION} CACHE STRING "CUDNN version")
 
@@ -26,6 +27,8 @@ ExternalProject_Add(tensorflow_src
   GIT_TAG c1d223de41838e9d387a48137c76ea39d3b38f3f
   PATCH_COMMAND bash -c "for i in ${CMAKE_SOURCE_DIR}/patches/*.patch\$<SEMICOLON> do git apply -p1 $i\$<SEMICOLON> done"
   UPDATE_COMMAND ""
+  BUILD_COMMAND make -j${NUM_MAKE_JOBS} install
+  INSTALL_COMMAND echo "Install"
   SOURCE_DIR tensorflow_src
   SOURCE_SUBDIR tensorflow/contrib/cmake
   BINARY_DIR tensorflow_build
