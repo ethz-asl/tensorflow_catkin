@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.8.0)
+cmake_minimum_required(VERSION 3.5.0)
 project(tensorflow_catkin)
 
 find_package(catkin_simple REQUIRED)
@@ -9,7 +9,14 @@ set(CUDA_ROOT $ENV{CUDA_ROOT} CACHE PATH "CUDA root directory")
 set(CUDNN_ROOT $ENV{CUDNN_ROOT} CACHE PATH "CUDNN root directory")
 set(NCCL_ROOT $ENV{NCCL_ROOT} CACHE PATH "NCCL root directory")
 
-include(ExternalProject)
+if(${CMAKE_VERSION} VERSION_LESS "3.7.0")
+       # ExternalProject_Add doesn't know the option SOURCE_SUBDIR in CMake before 3.7
+       file(DOWNLOAD "https://raw.githubusercontent.com/Kitware/CMake/v3.8.0/Modules/ExternalProject.cmake" ${CMAKE_CURRENT_SOURCE_DIR}/ExternalProject.cmake)
+       include(${CMAKE_CURRENT_SOURCE_DIR}/ExternalProject.cmake)
+else()
+  include(ExternalProject)
+endif()
+
 file(MAKE_DIRECTORY ${CATKIN_DEVEL_PREFIX}/include)
 
 ExternalProject_Add(tensorflow_src
