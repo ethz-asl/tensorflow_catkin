@@ -8,6 +8,8 @@ set(USE_GPU OFF CACHE BOOL "Build Tensorflow with GPU support")
 set(CUDA_ROOT $ENV{CUDA_ROOT} CACHE PATH "CUDA root directory")
 set(CUDNN_ROOT $ENV{CUDNN_ROOT} CACHE PATH "CUDNN root directory")
 set(NCCL_ROOT $ENV{NCCL_ROOT} CACHE PATH "NCCL root directory")
+set(CUDA_VERSION $ENV{CUDA_VERSION} CACHE STRING "CUDA version")
+set(CUDNN_VERSION $ENV{CUDNN_VERSION} CACHE STRING "CUDNN version")
 
 if(${CMAKE_VERSION} VERSION_LESS "3.7.0")
        # ExternalProject_Add doesn't know the option SOURCE_SUBDIR in CMake before 3.7
@@ -50,6 +52,8 @@ ExternalProject_Add(tensorflow_src
     -Dtensorflow_PATH_NCCL_STATIC_LIB=${NCCL_ROOT}/lib
     -Dtensorflow_CUDNN_INCLUDE=${CUDNN_ROOT}/include
     -Dtensorflow_PATH_CUDNN_STATIC_LIB=${CUDNN_ROOT}/lib64
+    -Dtensorflow_CUDA_VERSION=${CUDA_VERSION}
+    -Dtensorflow_CUDNN_VERSION=${CUDNN_VERSION}
 )
 
 cs_add_library(${PROJECT_NAME} src/dependency_tracker.cc)
