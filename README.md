@@ -1,14 +1,22 @@
 tensorflow_catkin
 ==============
 
-Catkin package wrapper for Tensorflow 1.7 C++
+Catkin package wrapper for Tensorflow 1.8 C++
 
 - Uses the CMake build and does __not__ require Bazel
-- Builds the latest master branch as of 09/04/2018: commit [b874783](https://github.com/tensorflow/tensorflow/tree/b874783ccdf4cc36cb3546e6b6a998cb8f3470bb)
+- Builds the [latest commit](https://github.com/tensorflow/tensorflow/tree/c1d223de41838e9d387a48137c76ea39d3b38f3f) of the master branch as of 24/06/2018
 - Supports GPU using the `-DUSE_GPU` CMake flag
   - Assumes that the root directories of CUDA, CUDNN and NCCL are provided either as environment variables `CUDA_ROOT`, `CUDNN_ROOT` and `NCCL_ROOT`, or as flags `-DCUDA_ROOT`, `-DCUDNN_ROOT`, `-DNCCL_ROOT`
+  - Supports CUDA >=8.0 and CUDNN >=6.0 (`-DCUDA_VERSION` and `-DCUDNN_VERSION` flags)
   - Supports linking against the run-time version of `libcuda` in `$CUDA_ROOT/lib64/stubs/`
-- Currently only tested on CentOS 7.4
+- Can leverage several make jobs to speed up the build (`-DNUM_MAKE_JOBS` flag)
+- Builds without SSE and AVX acceleration by default
+  - Because of memory alignment issues in Eigen, it is sometimes necessary to build all the libraries of a project with the same flags
+  - Set `-DCMAKE_CXX_FLAGS="-march=native"` no enable all the acceleration primitives
+- Tested on Ubuntu 14 and 16 and on a Jetson TX2
+- Requires CMake >=3.5
+  
+__Note__: some features are disabled, such as GRPC support, Python bindings, and JPEG- and PNG-related ops such as image encoding and decoding (the latter interferes with OpenCV but can be enabled by deleting the relevant patch).
 
 ## Usage
 
