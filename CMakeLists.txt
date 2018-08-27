@@ -25,7 +25,7 @@ file(MAKE_DIRECTORY ${CATKIN_DEVEL_PREFIX}/include)
 ExternalProject_Add(tensorflow_src
   GIT_REPOSITORY https://github.com/tensorflow/tensorflow.git
   GIT_TAG c1d223de41838e9d387a48137c76ea39d3b38f3f
-  PATCH_COMMAND bash -c "for i in ${CMAKE_SOURCE_DIR}/patches/*.patch\$<SEMICOLON> do git apply -p1 $i\$<SEMICOLON> done"
+  PATCH_COMMAND bash -c "for i in ${PROJECT_SOURCE_DIR}/patches/*.patch\$<SEMICOLON> do git apply -p1 $i\$<SEMICOLON> done"
   UPDATE_COMMAND ""
   BUILD_COMMAND make -j${NUM_MAKE_JOBS} install
   INSTALL_COMMAND echo "Install"
